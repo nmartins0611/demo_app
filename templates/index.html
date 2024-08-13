@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GFS Latency Monitor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffffff;
+        }
+
+        h2 {
+            color: #d1d1d1;
+            margin-top: 30px;
+        }
+
+        table {
+            width: 50%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #3b3b3b;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #4a4a4a;
+            text-align: center;
+            color: #e0e0e0;
+        }
+
+        th {
+            background-color: #4d4d4d;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #333333;
+        }
+
+        .refresh-counter {
+            color: #cccccc;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GFS Latency Monitor</h1>
+
+    <!-- Refresh Counter -->
+    <div class="refresh-counter">
+        <p>Page Refresh Count: <span id="refreshCounter">0</span></p>
+    </div>
+
+    <!-- Texas Data Center Table -->
+    <h2>Texas Data Center</h2>
+    <table>
+        <tr>
+            <th>Hostname</th>
+            <th>Latency (ms)</th>
+        </tr>
+        {% for entry in texas_data %}
+        <tr>
+            <td>{{ entry.hostname }}</td>
+            <td>{{ entry.latency }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Illinois Data Center Table -->
+    <h2>Illinois Data Center</h2>
+    <table>
+        <tr>
+            <th>Hostname</th>
+            <th>Latency (ms)</th>
+        </tr>
+        {% for entry in illinois_data %}
+        <tr>
+            <td>{{ entry.hostname }}</td>
+            <td>{{ entry.latency }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        // Check if refresh count is stored in localStorage
+        if (localStorage.getItem('refreshCount')) {
+            var refreshCount = parseInt(localStorage.getItem('refreshCount'));
+        } else {
+            var refreshCount = 0;
+        }
+
+        // Increment the refresh count
+        refreshCount += 1;
+
+        // Store the updated count in localStorage
+        localStorage.setItem('refreshCount', refreshCount);
+
+        // Display the refresh count
+        document.getElementById('refreshCounter').innerText = refreshCount;
+    </script>
+</body>
+</html>
